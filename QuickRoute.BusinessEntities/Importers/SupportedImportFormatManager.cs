@@ -95,6 +95,8 @@ namespace QuickRoute.BusinessEntities.Importers
         new FileFormat(Strings.FileFilter_QuickRouteFiles));
       supportedMapImageFileFormats.Add(
         new FileFormat(Strings.FileFilter_KmzFiles));
+      supportedMapImageFileFormats.Add(
+        new FileFormat(Strings.FileFilter_PdfFiles));
       return supportedMapImageFileFormats;
     }
 

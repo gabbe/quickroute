@@ -294,6 +294,9 @@
   <data name="FileFilter_PngFiles" xml:space="preserve">
     <value>Png (*.png)|*.png</value>
   </data>
+  <data name="FileFilter_PdfFiles" xml:space="preserve">
+    <value>Pdf (*.pdf)|*.pdf</value>
+  </data>
   <data name="FileFilter_QuickRoute10Files" xml:space="preserve">
     <value>QuickRoute 1.0 xml files (*.xml)|*.xml</value>
   </data>

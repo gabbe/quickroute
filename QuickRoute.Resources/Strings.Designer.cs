@@ -439,6 +439,15 @@ namespace QuickRoute.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pdf (*.pdf)|*.pdf.
+        /// </summary>
+        public static string FileFilter_PdfFiles {
+          get {
+            return ResourceManager.GetString("FileFilter_PdfFiles", resourceCulture);
+          }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Png (*.png)|*.png.
         /// </summary>
         public static string FileFilter_PngFiles {

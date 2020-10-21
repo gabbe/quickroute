@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Forms;
 using QuickRoute.BusinessEntities;
 using System.IO;
+using PdfiumViewer;
 using QuickRoute.BusinessEntities.Importers;
 using QuickRoute.Controls;
 using QuickRoute.Resources;
@@ -30,6 +31,7 @@ namespace QuickRoute.UI.Forms
     private DownloadProgressChangedEventArgs loadingImageProgressChangedEventArgs;
     private DateTime lastLabelUpdate;
     private FileLoader imageLoader;
+    private const float DPI_F = 150;
 
     public CreateNewForm()
       : this(null)
@@ -514,6 +516,14 @@ namespace QuickRoute.UI.Forms
             }
             break;
           }
+        case ImageFileFormat.PdfFile:
+          using (var ms = new MemoryStream(originalMapBytes))
+          {
+            var pdfDocument = PdfDocument.Load(ms);
+            var image = pdfDocument.Render(0, DPI_F, DPI_F, PdfRenderFlags.CorrectFromDpi);
+            Map = new Map(new Bitmap(image));
+            break;
+          }
       }
     }
 
@@ -629,6 +639,12 @@ namespace QuickRoute.UI.Forms
             {
               return Image.FromStream(ms);
             }
+          case ImageFileFormat.PdfFile:
+            using (var ms = new MemoryStream(bytes))
+            {
+              var pdfDocument = PdfDocument.Load(ms);
+              return pdfDocument.Render(0, DPI_F, DPI_F,PdfRenderFlags.CorrectFromDpi);
+            }
 
           case ImageFileFormat.QuickRouteFile:
             using (var ms = new MemoryStream(bytes))
@@ -665,6 +681,7 @@ namespace QuickRoute.UI.Forms
           case 0: return ImageFileFormat.ImageFile;
           case 1: return ImageFileFormat.QuickRouteFile;
           case 2: return ImageFileFormat.KmzFile;
+          case 3: return ImageFileFormat.PdfFile;
         }
         return default(ImageFileFormat);
       }
@@ -681,7 +698,8 @@ namespace QuickRoute.UI.Forms
   {
     ImageFile,
     QuickRouteFile,
-    KmzFile
+    KmzFile,
+    PdfFile
   }
 
   public class FileLoader : IDisposable
